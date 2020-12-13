@@ -17,6 +17,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["dist", "node_modules"],
   "include": ["**/*.ts"]
 }
