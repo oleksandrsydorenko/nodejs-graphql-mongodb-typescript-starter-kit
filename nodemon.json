@@ -1,7 +1,4 @@
 {
-  "events": {
-    "restart": "yarn build"
-  },
   "ext": "js, json, ts",
   "watch": [".env", "babel.config.js", "package.json", "src", "tsconfig.json"]
 }

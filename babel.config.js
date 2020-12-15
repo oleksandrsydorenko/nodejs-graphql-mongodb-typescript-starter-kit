@@ -10,19 +10,27 @@ module.exports = {
     ],
     // allows to use TypeScript features
     '@babel/preset-typescript',
-    [
-      // minifies transpiled code
-      'minify',
-      {
-        // removes debugger statements
-        removeDebugger: true,
-      },
-    ],
+  ],
+  plugins: [
+    // enables the re-using of Babel's of helpers
+    '@babel/plugin-transform-runtime',
   ],
   env: {
     development: {
       // disables omitting newlines and whitespace
       compact: false,
+    },
+    production: {
+      presets: [
+        // minifies transpiled code
+        [
+          'minify',
+          {
+            // removes debugger statements
+            removeDebugger: true,
+          },
+        ],
+      ],
     },
   },
 };
