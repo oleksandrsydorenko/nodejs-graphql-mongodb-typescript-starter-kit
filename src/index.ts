@@ -1,17 +1,22 @@
 import express, { Application } from 'express';
-import { ApolloServer } from 'apollo-server-express';
 
-import './config';
-import { resolvers, typeDefs } from './gql';
+import config from './config';
+import loaders from './loaders';
+import { error, log } from './utils';
 
-const app: Application = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+async function startServer() {
+  const app: Application = express();
 
-server.applyMiddleware({ app, path: '/graphql' });
+  loaders(app);
 
-app.listen({ port: 8000 }, () => {
-  console.log('Apollo Server is on http://localhost:8000/graphql');
-});
+  app
+    .listen(config.expressServer.port, () => {
+      log(`Apollo Server is listening on ${config.apolloServer.url}`);
+    })
+    .on('error', err => {
+      error(err);
+      process.exit(1);
+    });
+}
+
+startServer();

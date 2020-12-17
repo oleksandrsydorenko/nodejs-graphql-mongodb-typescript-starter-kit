@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["esnext", "webworker"],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "pretty": true,
     "removeComments": true,
     "strict": true,
     "target": "es6"

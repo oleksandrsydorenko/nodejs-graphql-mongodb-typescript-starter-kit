@@ -1,13 +1,38 @@
 import dotenv from 'dotenv';
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 const env = dotenv.config();
 
 if (env.error) {
   throw new Error('.env file is missing');
 }
 
+const apolloServer = {
+  path: '/graphql',
+};
+const expressServer = {
+  domain: process.env.EXPRESS_SERVER_DOMAIN || 'localhost',
+  protocol: process.env.EXPRESS_SERVER_PROTOCOL || 'http',
+  port: process.env.EXPRESS_SERVER_PORT ? parseInt(process.env.EXPRESS_SERVER_PORT, 10) : 8000,
+};
+const expressServerUrl = `${expressServer.protocol}://${expressServer.domain}:${expressServer.port}`;
+
 export default {
-  env: process.env.NODE_ENV || 'production',
-  mongoDBDomain: process.env.MONGODB_DOMAIN,
-  serverPort: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+  apolloServer: {
+    ...apolloServer,
+    url: `${expressServerUrl}${apolloServer.path}`,
+  },
+  env: {
+    isDevelopment: process.env.NODE_ENV === 'development',
+    isProduction: process.env.NODE_ENV === 'production',
+    type: process.env.NODE_ENV,
+  },
+  expressServer: {
+    ...expressServer,
+    url: expressServerUrl,
+  },
+  mongoDB: {
+    domain: process.env.MONGODB_DOMAIN,
+  },
 };

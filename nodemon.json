@@ -1,4 +1,6 @@
 {
-  "ext": "js, json, ts",
-  "watch": [".env", "babel.config.js", "package.json", "src", "tsconfig.json"]
+  "exec": "babel-node ./src/index.ts --extensions \".js,.ts\"",
+  "ext": "js, json, ts, yaml",
+  "ignore": ["src/**/*.spec.ts"],
+  "watch": [".env", "babel.config.js", "src", "tsconfig.json"]
 }
