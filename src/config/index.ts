@@ -30,6 +30,7 @@ export default {
   },
   expressServer: {
     ...expressServer,
+    allowedOrigins: process.env.ALLOWED_ORIGINS && process.env.ALLOWED_ORIGINS.split(','),
     url: expressServerUrl,
   },
   mongoDB: {

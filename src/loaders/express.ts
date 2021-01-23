@@ -1,6 +1,4 @@
-import { Application, Request, Response } from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import express, { Application, Request, Response } from 'express';
 
 import routes from '../routes';
 
@@ -8,19 +6,26 @@ interface IResponseError extends Error {
   statusCode?: number;
 }
 
-export default (app: Application) => {
-  app.use(cors());
-  app.use(bodyParser.json());
+export default (app: Application): void => {
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  // app.use((req, res, next) => {
+  //   req.context = {
+  //     models,
+  //     me: models.users[1],
+  //   };
+  //   next();
+  // });
   app.use(routes());
-  // catching 404 error and forwarding next
-  app.use((_req: Request, _res: Response, next) => {
+  // catches 404 error and forwards it
+  app.use((_req: Request, _res: Response, next): void => {
     const error: IResponseError = new Error('Not Found');
 
     error.statusCode = 404;
     next(error);
   });
-  // error handling middleware
-  app.use((err: IResponseError, _req: Request, res: Response) => {
+  // handles errors
+  app.use((err: IResponseError, _req: Request, res: Response): void => {
     res.status(err.statusCode || 500).send(err.message);
   });
 };

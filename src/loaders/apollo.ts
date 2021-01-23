@@ -2,13 +2,25 @@ import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
 
 import config from '../config';
-import { resolvers, typeDefs } from '../gql';
+import { resolvers, typeDefs } from '../graphql';
 
-export default (app: Application) => {
-  const server = new ApolloServer({
+interface ICorsOptions {
+  origin: string[] | boolean;
+}
+
+const corsOptions: ICorsOptions = {
+  origin: config.expressServer.allowedOrigins || false,
+};
+
+export default (app: Application): void => {
+  const server: ApolloServer = new ApolloServer({
     typeDefs,
     resolvers,
   });
 
-  server.applyMiddleware({ app, path: config.apolloServer.path });
+  server.applyMiddleware({
+    app,
+    cors: corsOptions,
+    path: config.apolloServer.path,
+  });
 };
