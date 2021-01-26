@@ -14,6 +14,20 @@ module.exports = {
   plugins: [
     // enables the re-using of Babel's helpers
     '@babel/plugin-transform-runtime',
+    [
+      // enables modules aliases
+      'module-resolver',
+      {
+        alias: {
+          '@config': './src/config',
+          '@graphql': './src/graphql',
+          '@loaders': './src/loaders',
+          '@models': './src/models',
+          '@routes': './src/routes',
+          '@utils': './src/utils',
+        },
+      },
+    ],
   ],
   env: {
     development: {

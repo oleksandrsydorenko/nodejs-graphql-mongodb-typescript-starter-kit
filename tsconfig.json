@@ -10,6 +10,14 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "paths": {
+      "@config": ["./config"],
+      "@graphql": ["./graphql"],
+      "@loaders": ["./loaders"],
+      "@models": ["./models"],
+      "@routes": ["./routes"],
+      "@utils": ["./utils"]
+    },
     "pretty": true,
     "removeComments": true,
     "strict": true,
