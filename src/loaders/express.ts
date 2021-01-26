@@ -1,6 +1,7 @@
+import shrinkRay from 'shrink-ray-current';
 import express, { Application, Request, Response } from 'express';
 
-import routes from '../routes';
+import routes from '@routes';
 
 interface IResponseError extends Error {
   statusCode?: number;
@@ -9,14 +10,8 @@ interface IResponseError extends Error {
 export default (app: Application): void => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  // app.use((req, res, next) => {
-  //   req.context = {
-  //     models,
-  //     me: models.users[1],
-  //   };
-  //   next();
-  // });
   app.use(routes());
+  app.use(shrinkRay());
   // catches 404 error and forwards it
   app.use((_req: Request, _res: Response, next): void => {
     const error: IResponseError = new Error('Not Found');

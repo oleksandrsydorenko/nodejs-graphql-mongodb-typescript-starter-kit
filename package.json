@@ -9,7 +9,7 @@
     "lint": "yarn lint:eslint & yarn lint:prettier",
     "lint:eslint": "eslint --fix \"**/*.{j,t}s\"",
     "lint:prettier": "prettier -w \"**/*.{json,yaml}\"",
-    "serve": "node dist/index.js",
+    "serve": "cross-env NODE_ENV=production node dist/index.js",
     "start": "cross-env NODE_ENV=development nodemon",
     "test:coverage": "jest --coverage",
     "test:debug": "jest --inspect-brk --runInBand",
@@ -32,12 +32,12 @@
     "@babel/runtime": "^7.12.5",
     "apollo-server": "^2.19.2",
     "apollo-server-express": "^2.19.2",
-    "deepmerge": "^4.2.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.4.0",
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "shrink-ray-current": "^4.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
