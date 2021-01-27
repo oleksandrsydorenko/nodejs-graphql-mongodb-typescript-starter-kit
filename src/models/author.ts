@@ -21,4 +21,7 @@ const authors = [
   },
 ];
 
-export default authors;
+export default {
+  findAll: () => authors,
+  findById: id => authors.find(item => item.id === id) || null,
+};

@@ -1,5 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
+import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
+import { makeExecutableSchema } from 'graphql-tools';
 
 import config from '@config';
 import * as models from '@models';
@@ -18,8 +20,11 @@ export default (app: Application): void => {
     context: {
       models,
     },
-    resolvers: graphql.resolvers,
-    typeDefs: graphql.schema,
+    schema: makeExecutableSchema({
+      resolvers: graphql.resolvers,
+      schemaTransforms: [constraintDirective()],
+      typeDefs: [constraintDirectiveTypeDefs, ...graphql.schema],
+    }),
   });
 
   server.applyMiddleware({

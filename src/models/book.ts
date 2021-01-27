@@ -41,4 +41,8 @@ const books = [
   },
 ];
 
-export default books;
+export default {
+  filterByAuthorId: authorId => books.filter(book => book.authorId === authorId),
+  findAll: () => books,
+  findById: id => books.find(book => book.id === id) || null,
+};

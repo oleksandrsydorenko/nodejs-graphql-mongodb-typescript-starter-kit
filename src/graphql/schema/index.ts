@@ -1,9 +1,7 @@
-import { gql } from 'apollo-server-express';
-
 import author from './author';
 import book from './book';
 
-const root = gql`
+const root = `
   type Query {
     _: String
   }

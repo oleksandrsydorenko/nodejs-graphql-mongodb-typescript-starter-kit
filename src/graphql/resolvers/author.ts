@@ -1,10 +1,10 @@
 export default {
   Query: {
-    author: (_parent, { id }, { models }) => models.author.find(item => item.id === id),
-    authors: (_parent, _args, { models }) => models.author,
+    author: (_parent, { id }, { models }) => models.Author.findById(id),
+    authors: (_parent, _args, { models }) => models.Author.findAll(),
   },
 
   Author: {
-    books: (author, _args, { models }) => models.book.filter(item => item.authorId === author.id),
+    books: (author, _args, { models }) => models.Book.filterByAuthorId(author.id),
   },
 };
