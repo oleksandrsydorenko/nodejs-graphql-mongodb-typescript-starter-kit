@@ -1,7 +1,17 @@
 export default `
   extend type Query {
-    book(id: ID!): Book
+    book(title: String!): Book
     books: [Book!]
+  }
+
+  extend type Mutation {
+    createBook(title: String!, author: String!): Book
+    deleteBook(title: String!): Boolean!
+    updateBook(title: String!, data: UpdateBookInput!): Book
+  }
+
+  input UpdateBookInput {
+    title: String
   }
 
   type Book {

@@ -7,19 +7,29 @@ import config from '@config';
 import * as models from '@models';
 import * as graphql from '@graphql';
 
-interface ICorsOptions {
-  origin: string[] | boolean;
+interface IContext {
+  models: {
+    Author: models.IAuthorModel;
+    Book: models.IBookModel;
+  };
 }
 
-const corsOptions: ICorsOptions = {
-  origin: config.expressServer.allowedOrigins || false,
+export type IResolver<TParent, TArgs, TResponse> = (
+  parent: TParent,
+  args: TArgs,
+  context: IContext,
+) => TResponse;
+
+const context: IContext = {
+  models: {
+    Author: models.AuthorModel,
+    Book: models.BookModel,
+  },
 };
 
 export default (app: Application): void => {
   const server: ApolloServer = new ApolloServer({
-    context: {
-      models,
-    },
+    context,
     schema: makeExecutableSchema({
       resolvers: graphql.resolvers,
       schemaTransforms: [constraintDirective()],
@@ -29,7 +39,9 @@ export default (app: Application): void => {
 
   server.applyMiddleware({
     app,
-    cors: corsOptions,
+    cors: {
+      origin: config.expressServer.allowedOrigins || false,
+    },
     path: config.apolloServer.path,
   });
 };
