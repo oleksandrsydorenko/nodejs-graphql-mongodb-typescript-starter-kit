@@ -9,16 +9,14 @@ const getPresets = isTypeScript =>
           // Airbnb rules for JavaScript
           'airbnb-base',
         ]),
+    // rules for Promises
+    'plugin:promise/recommended',
     // rules for Jest
     'plugin:jest/recommended',
     // extended rules for Jest
     'plugin:jest/style',
-    // extends eslint-config-prettier and allows to run Prettier rules as the Eslint ones
-    'plugin:prettier/recommended',
-    // rules for Promises
-    'plugin:promise/recommended',
     // disables ESLint rules that can conflict with Prettier
-    'prettier',
+    'plugin:prettier/recommended',
     // disables @typescript-eslint rules that can conflict with Prettier
     isTypeScript && 'prettier/@typescript-eslint',
   ].filter(Boolean);
@@ -44,6 +42,9 @@ module.exports = {
       files: ['*.ts'],
       parserOptions: {
         project: './tsconfig.json',
+      },
+      rules: {
+        'no-underscore-dangle': 'off',
       },
     },
   ],

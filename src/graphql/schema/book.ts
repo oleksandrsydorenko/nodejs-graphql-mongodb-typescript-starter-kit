@@ -5,8 +5,8 @@ export default `
   }
 
   extend type Mutation {
-    createBook(title: String!, author: String!): Book
-    deleteBook(title: String!): Boolean!
+    createBook(title: String!, author: String!): Book!
+    deleteBook(title: String!): Book
     updateBook(title: String!, data: UpdateBookInput!): Book
   }
 

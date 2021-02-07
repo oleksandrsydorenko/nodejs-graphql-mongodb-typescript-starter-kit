@@ -1,11 +1,15 @@
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
-import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
+import {
+  constraintDirective,
+  constraintDirectiveTypeDefs,
+} from 'graphql-constraint-directive';
 import { makeExecutableSchema } from 'graphql-tools';
 
 import config from '@config';
 import * as models from '@models';
 import * as graphql from '@graphql';
+import { IError } from '@utils';
 
 interface IContext {
   models: {
@@ -18,7 +22,7 @@ export type IResolver<TParent, TArgs, TResponse> = (
   parent: TParent,
   args: TArgs,
   context: IContext,
-) => TResponse;
+) => Promise<TResponse | IError>;
 
 const context: IContext = {
   models: {
@@ -30,6 +34,8 @@ const context: IContext = {
 export default (app: Application): void => {
   const server: ApolloServer = new ApolloServer({
     context,
+    introspection: config.env.isDevelopment,
+    playground: config.env.isDevelopment,
     schema: makeExecutableSchema({
       resolvers: graphql.resolvers,
       schemaTransforms: [constraintDirective()],
@@ -40,8 +46,8 @@ export default (app: Application): void => {
   server.applyMiddleware({
     app,
     cors: {
-      origin: config.expressServer.allowedOrigins || false,
+      origin: config.server.allowedOrigins || false,
     },
-    path: config.apolloServer.path,
+    path: config.graphql.path,
   });
 };

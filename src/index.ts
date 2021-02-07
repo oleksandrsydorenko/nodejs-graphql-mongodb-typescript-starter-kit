@@ -2,24 +2,29 @@ import express, { Application } from 'express';
 
 import config from './config';
 import loaders from './loaders';
-import { error, log } from './utils';
+import { logInfo, terminateProcess } from './utils';
 
 const startServer = async (): Promise<void> => {
   const app: Application = express();
 
-  loaders(app);
+  try {
+    await loaders(app);
+  } catch (e) {
+    terminateProcess(e);
+  }
 
   app
-    .listen(config.expressServer.port, () => {
-      log(`Server is running on ${config.expressServer.url}`);
+    .listen(config.server.port, () => {
+      logInfo(`Express Server is running on ${config.server.url}`);
 
       if (config.env.isDevelopment) {
-        log(`GraphQL playground is running on ${config.apolloServer.url}`);
+        logInfo(
+          `Apollo GraphQL playground is running on ${config.graphql.url}`,
+        );
       }
     })
-    .on('error', err => {
-      error(err);
-      process.exit(1);
+    .on('error', e => {
+      terminateProcess(e);
     });
 };
 

@@ -1,91 +1,45 @@
-let authors = [
-  {
-    id: '1',
-    name: 'Fyodor Mikhailovich Dostoevsky',
-    bookIds: ['3', '6'],
-  },
-  {
-    id: '2',
-    name: 'Lev Nikolaevich Tolstoy',
-    bookIds: ['1', '8'],
-  },
-  {
-    id: '3',
-    name: 'Mikhail Afanasyevich Bulgakov',
-    bookIds: ['7'],
-  },
-  {
-    id: '4',
-    name: 'William Cuthbert Faulkner',
-    bookIds: ['2', '4', '5'],
-  },
-];
+import { Document, Schema, Model, model, models, Types } from 'mongoose';
 
-export type Author = {
-  id: string;
+export interface IAuthorDocument extends Document {
+  id: Types.ObjectId;
   bookIds: string[];
   name: string;
-};
-
-export type AuthorResponse = Author | null;
-
-export interface IAuthorModel {
-  create: (name: string) => AuthorResponse;
-  delete: (name: string) => boolean;
-  findAll: () => Author[];
-  findById: (id: string) => AuthorResponse;
-  findByName: (name: string) => AuthorResponse;
-  update: (name: string, data: { bookIds?: string[]; name?: string }) => AuthorResponse;
 }
 
-const AuthorModel: IAuthorModel = {
-  create: name => {
-    if (!authors.find(author => author.name === name)) {
-      return null;
-    }
+export interface IAuthorModel extends Model<IAuthorDocument> {}
 
-    const newAuthor: Author = {
-      bookIds: [],
-      name,
-      id: authors.reduce((acc, author) => Math.max(acc, parseInt(author.id, 10)), 1).toString(),
-    };
-
-    authors.push(newAuthor);
-
-    return newAuthor;
+const AuthorSchema: Schema = new Schema(
+  {
+    bookIds: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Book',
+        trim: true,
+      },
+    ],
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
   },
-  delete: name => {
-    const filteredAuthors: Author[] = authors.filter(author => author.name !== name);
-
-    if (filteredAuthors.length === authors.length) {
-      return false;
-    }
-
-    authors = filteredAuthors;
-
-    return true;
+  {
+    timestamps: true,
   },
-  findAll: () => authors,
-  findById: id => authors.find(author => author.id === id) || null,
-  findByName: name => authors.find(author => author.name === name) || null,
-  update: (name, data) => {
-    if (!data || !Object.keys(data).length) {
-      return null;
-    }
+);
 
-    let authorFromDb: AuthorResponse = null;
+AuthorSchema.post('findOneAndDelete', async function findOneAndDelete(author) {
+  if (!author) {
+    return;
+  }
 
-    authors.forEach(author => {
-      if (author.name === name) {
-        authorFromDb = {
-          ...author,
-          ...data,
-        };
-      }
-    });
+  await models.Book.deleteMany({ authorId: author._id });
+});
 
-    return authorFromDb;
-  },
-};
+const AuthorModel: IAuthorModel = model<IAuthorDocument, IAuthorModel>(
+  'Author',
+  AuthorSchema,
+);
 
 export default AuthorModel;

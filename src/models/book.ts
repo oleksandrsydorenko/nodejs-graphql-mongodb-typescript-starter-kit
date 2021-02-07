@@ -1,125 +1,49 @@
-let books = [
-  {
-    id: '1',
-    authorId: '2',
-    title: 'Anna Karenina',
-  },
-  {
-    id: '2',
-    authorId: '4',
-    title: 'As I Lay Dying',
-  },
-  {
-    id: '3',
-    authorId: '1',
-    title: 'Crime and Punishment',
-  },
-  {
-    id: '4',
-    authorId: '4',
-    title: 'Go Down, Moses',
-  },
-  {
-    id: '5',
-    authorId: '4',
-    title: 'Light in August',
-  },
-  {
-    id: '6',
-    authorId: '1',
-    title: 'The Idiot',
-  },
-  {
-    id: '7',
-    authorId: '3',
-    title: 'The Master and Margarita',
-  },
-  {
-    id: '8',
-    authorId: '2',
-    title: 'War and Peace',
-  },
-];
+import { Document, Schema, Model, model, models, Types } from 'mongoose';
 
-export type Book = {
-  id: string;
-  authorId: string;
-  title: string;
-};
-
-export type BookResponse = Book | null;
-
-export interface IBookModel {
-  create: (titles: string, author: string) => BookResponse;
-  delete: (title: string) => boolean;
-  deleteByAuthorId: (authorId: string) => boolean;
-  filterByAuthorId: (authorId: string) => Book[];
-  findAll: () => Book[];
-  findById: (id: string) => BookResponse;
-  findByTitle: (title: string) => BookResponse;
-  update: (title: string, data: { author?: string; title?: string }) => BookResponse;
+export interface IBookDocument extends Document {
+  id: Types.ObjectId;
+  authorId: {
+    type: Types.ObjectId;
+    ref: 'Author';
+  };
+  title: String;
 }
 
-const BookModel: IBookModel = {
-  create: (title, authorId) => {
-    if (books.find(book => book.title === title)) {
-      return null;
-    }
+export interface IBookModel extends Model<IBookDocument> {}
 
-    const newBook: Book = {
-      authorId,
-      title,
-      id: books.reduce((acc, book) => Math.max(parseInt(book.id, 10), acc), 1).toString(),
-    };
-
-    books.push(newBook);
-
-    return newBook;
+const BookSchema: Schema = new Schema(
+  {
+    authorId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Author',
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
-  delete: title => {
-    const filteredBooks: Book[] = books.filter(book => book.title !== title);
-
-    if (filteredBooks.length === books.length) {
-      return false;
-    }
-
-    books = filteredBooks;
-
-    return true;
+  {
+    timestamps: true,
   },
-  deleteByAuthorId: authorId => {
-    const filteredBooks: Book[] = books.filter(book => book.authorId !== authorId);
+);
 
-    if (filteredBooks.length === books.length) {
-      return false;
-    }
+BookSchema.post('findOneAndDelete', async function deleteOne(book) {
+  if (!book) {
+    return;
+  }
 
-    books = filteredBooks;
+  await models.Author.findOneAndUpdate(this.authorId, {
+    $pull: {
+      bookIds: book._id,
+    },
+  });
+});
 
-    return true;
-  },
-  filterByAuthorId: authorId => books.filter(book => book.authorId === authorId),
-  findAll: () => books,
-  findById: id => books.find(book => book.id === id) || null,
-  findByTitle: title => books.find(book => book.title === title) || null,
-  update: (title, data) => {
-    if (!data || !Object.keys(data).length) {
-      return null;
-    }
-
-    let bookFromDb: BookResponse = null;
-
-    books.forEach(book => {
-      if (book.title === title) {
-        bookFromDb = {
-          ...book,
-          ...data,
-        };
-      }
-    });
-
-    return bookFromDb;
-  },
-};
+const BookModel: IBookModel = model<IBookDocument, IBookModel>(
+  'Book',
+  BookSchema,
+);
 
 export default BookModel;

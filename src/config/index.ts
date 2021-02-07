@@ -8,32 +8,66 @@ if (env.error) {
   throw new Error('.env file is missing');
 }
 
-const apolloServer = {
+const DEFAULT_HOST = 'localhost';
+const DEFAULT_PROTOCOL = 'http';
+
+const {
+  DB_HOST,
+  DB_NAME,
+  DB_PASSWORD,
+  DB_PORT,
+  DB_PROTOCOL,
+  DB_USERNAME,
+  NODE_ENV,
+  SERVER_ALLOWED_ORIGINS,
+  SERVER_HOST,
+  SERVER_PORT,
+  SERVER_PROTOCOL,
+} = process.env;
+
+const dbUrlScheme = {
+  host: DB_HOST || DEFAULT_HOST,
+  port: DB_PORT && parseInt(DB_PORT, 10),
+  protocol: DB_PROTOCOL || DEFAULT_PROTOCOL,
+};
+const databaseUrl = `${dbUrlScheme.protocol}://${dbUrlScheme.host}${
+  dbUrlScheme.port ? `:${dbUrlScheme.port}` : ''
+}`;
+
+const serverUrlScheme = {
+  host: SERVER_HOST || DEFAULT_HOST,
+  port: SERVER_PORT && parseInt(SERVER_PORT, 10),
+  protocol: SERVER_PROTOCOL || DEFAULT_PROTOCOL,
+};
+const serverUrl = `${serverUrlScheme.protocol}://${serverUrlScheme.host}${
+  serverUrlScheme.port ? `:${serverUrlScheme.port}` : ''
+}`;
+
+const graphqlUrlScheme = {
   path: '/graphql',
 };
-const expressServer = {
-  domain: process.env.EXPRESS_SERVER_DOMAIN || 'localhost',
-  protocol: process.env.EXPRESS_SERVER_PROTOCOL || 'http',
-  port: process.env.EXPRESS_SERVER_PORT ? parseInt(process.env.EXPRESS_SERVER_PORT, 10) : 8000,
-};
-const expressServerUrl = `${expressServer.protocol}://${expressServer.domain}:${expressServer.port}`;
+const graphqlUrl = `${serverUrl}${graphqlUrlScheme.path}`;
 
 export default {
-  apolloServer: {
-    ...apolloServer,
-    url: `${expressServerUrl}${apolloServer.path}`,
+  database: {
+    ...dbUrlScheme,
+    name: DB_NAME,
+    password: DB_PASSWORD || '',
+    url: databaseUrl,
+    username: DB_USERNAME || '',
   },
   env: {
-    isDevelopment: process.env.NODE_ENV === 'development',
-    isProduction: process.env.NODE_ENV === 'production',
-    type: process.env.NODE_ENV,
+    isDevelopment: NODE_ENV === 'development',
+    isProduction: NODE_ENV === 'production',
+    type: NODE_ENV,
   },
-  expressServer: {
-    ...expressServer,
-    allowedOrigins: process.env.ALLOWED_ORIGINS && process.env.ALLOWED_ORIGINS.split(','),
-    url: expressServerUrl,
+  graphql: {
+    ...graphqlUrlScheme,
+    url: graphqlUrl,
   },
-  mongoDB: {
-    domain: process.env.MONGODB_DOMAIN,
+  server: {
+    ...serverUrlScheme,
+    allowedOrigins: SERVER_ALLOWED_ORIGINS && SERVER_ALLOWED_ORIGINS.split(','),
+    url: serverUrl,
   },
 };

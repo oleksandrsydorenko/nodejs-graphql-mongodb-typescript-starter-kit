@@ -5,18 +5,18 @@ export default `
   }
 
   extend type Mutation {
-    createAuthor(name: String!): Author
-    deleteAuthor(name: String!): Boolean!
-    updateAuthor(name: String!, data: UpdateAuthorInput!): Author
+    createAuthor(name: String!): Author!
+    deleteAuthor(name: String!): Author
+    updateAuthor(name: String!, update: AuthorUpdateInput!): Author
   }
 
-  input UpdateAuthorInput {
+  input AuthorUpdateInput {
     name: String
   }
 
   type Author {
     id: ID!
-    name: String!
     books: [Book!]
+    name: String!
   }
 `;

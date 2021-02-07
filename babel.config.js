@@ -12,7 +12,7 @@ module.exports = {
     '@babel/preset-typescript',
   ],
   plugins: [
-    // enables the re-using of Babel's helpers
+    // enables re-using of Babel's helpers
     '@babel/plugin-transform-runtime',
     [
       // enables modules aliases

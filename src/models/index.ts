@@ -1,2 +1,7 @@
-export { default as AuthorModel, Author, AuthorResponse, IAuthorModel } from './author';
-export { default as BookModel, Book, BookResponse, IBookModel } from './book';
+export {
+  default as AuthorModel,
+  IAuthorDocument,
+  IAuthorModel,
+} from './author';
+
+export { default as BookModel, IBookDocument, IBookModel } from './book';
