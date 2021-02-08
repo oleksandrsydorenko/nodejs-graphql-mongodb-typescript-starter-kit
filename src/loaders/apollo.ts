@@ -9,20 +9,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import config from '@config';
 import * as models from '@models';
 import * as graphql from '@graphql';
-import { IError } from '@utils';
-
-interface IContext {
-  models: {
-    Author: models.IAuthorModel;
-    Book: models.IBookModel;
-  };
-}
-
-export type IResolver<TParent, TArgs, TResponse> = (
-  parent: TParent,
-  args: TArgs,
-  context: IContext,
-) => Promise<TResponse | IError>;
+import { IContext } from '@ts';
 
 const context: IContext = {
   models: {
@@ -46,7 +33,7 @@ export default (app: Application): void => {
   server.applyMiddleware({
     app,
     cors: {
-      origin: config.server.allowedOrigins || false,
+      origin: config.graphql.origin,
     },
     path: config.graphql.path,
   });

@@ -4,7 +4,7 @@ import config from './config';
 import loaders from './loaders';
 import { logInfo, terminateProcess } from './utils';
 
-const startServer = async (): Promise<void> => {
+const startServer: Function = async (): Promise<void> => {
   const app: Application = express();
 
   try {
@@ -14,8 +14,8 @@ const startServer = async (): Promise<void> => {
   }
 
   app
-    .listen(config.server.port, () => {
-      logInfo(`Express Server is running on ${config.server.url}`);
+    .listen(config.express.port, () => {
+      logInfo(`Express Server is running on ${config.express.url}`);
 
       if (config.env.isDevelopment) {
         logInfo(

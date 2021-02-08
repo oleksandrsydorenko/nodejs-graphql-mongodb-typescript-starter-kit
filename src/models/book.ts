@@ -1,15 +1,5 @@
-import { Document, Schema, Model, model, models, Types } from 'mongoose';
-
-export interface IBookDocument extends Document {
-  id: Types.ObjectId;
-  authorId: {
-    type: Types.ObjectId;
-    ref: 'Author';
-  };
-  title: String;
-}
-
-export interface IBookModel extends Model<IBookDocument> {}
+import { Schema, model, models } from 'mongoose';
+import { IBookDocument, IBookModel } from '@ts';
 
 const BookSchema: Schema = new Schema(
   {

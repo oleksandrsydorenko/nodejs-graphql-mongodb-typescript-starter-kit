@@ -1,8 +1,7 @@
 import { ApolloError } from 'apollo-server';
 
-import { ERROR_MONGOOSE, ERROR_RESPONSE, IError } from '@utils';
-import { IAuthorDocument, IBookDocument } from '@models';
-import { IResolver } from '@loaders/apollo';
+import { ERROR_MONGOOSE, ERROR_RESPONSE } from '@constants';
+import { IAuthorDocument, IBookDocument, IError, IResolver } from '@ts';
 
 interface IAuthorResolvers {
   Query: {
@@ -44,12 +43,12 @@ const authorResolvers: IAuthorResolvers = {
 
         return newAuthor;
       } catch (e) {
-        const error: IError =
+        const errorResponse: IError =
           e.code === ERROR_MONGOOSE.DUPLICATE_KEY
             ? ERROR_RESPONSE.AUTHOR_EXISTS
             : ERROR_RESPONSE.INTERNAL_SERVER_ERROR;
 
-        throw new ApolloError(error.message, error.code);
+        throw new ApolloError(errorResponse.message, errorResponse.code);
       }
     },
     deleteAuthor: async (_parent, { name }, { models }) =>

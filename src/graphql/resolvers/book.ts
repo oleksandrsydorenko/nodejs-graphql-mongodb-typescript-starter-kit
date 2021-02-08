@@ -1,8 +1,7 @@
 import { ApolloError } from 'apollo-server';
 
-import { ERROR_MONGOOSE, ERROR_RESPONSE, IError } from '@utils';
-import { IAuthorDocument, IBookDocument } from '@models';
-import { IResolver } from '@loaders/apollo';
+import { ERROR_MONGOOSE, ERROR_RESPONSE } from '@constants';
+import { IAuthorDocument, IBookDocument, IError, IResolver } from '@ts';
 
 interface IBookResolvers {
   Query: {

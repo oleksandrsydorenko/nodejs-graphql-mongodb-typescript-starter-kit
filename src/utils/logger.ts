@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 export const logError = (...args: any): void => {
   console.error(...args);
 };

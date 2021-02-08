@@ -20,10 +20,12 @@ module.exports = {
       {
         alias: {
           '@config': './src/config',
+          '@constants': './src/constants',
           '@graphql': './src/graphql',
           '@loaders': './src/loaders',
           '@models': './src/models',
           '@routes': './src/routes',
+          '@ts': './src/ts',
           '@utils': './src/utils',
         },
       },

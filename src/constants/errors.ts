@@ -1,21 +1,4 @@
-import { logError } from './logger';
-
-export interface IError {
-  code: string;
-  message: string;
-}
-
-interface IErrorMongoose {
-  DUPLICATE_KEY: number;
-}
-
-interface IErrorResponse {
-  AUTHOR_EXISTS: IError;
-  AUTHOR_DOES_NOT_EXISTS: IError;
-  BOOK_EXISTS: IError;
-  BOOK_DOES_NOT_EXISTS: IError;
-  INTERNAL_SERVER_ERROR: IError;
-}
+import { IErrorMongoose, IErrorResponse } from '@ts';
 
 export const ERROR_MONGOOSE: IErrorMongoose = {
   DUPLICATE_KEY: 11000,
@@ -42,12 +25,4 @@ export const ERROR_RESPONSE: IErrorResponse = {
     code: 'INTERNAL_SERVER_ERROR',
     message: 'Internal server error',
   },
-};
-
-export const terminateProcess = (e?: Error): void => {
-  if (e) {
-    logError(e);
-  }
-
-  process.exit(1);
 };
