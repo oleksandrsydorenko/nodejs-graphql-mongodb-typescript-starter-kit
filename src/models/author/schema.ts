@@ -1,4 +1,4 @@
-export default `
+const authorSchema: string = `
   extend type Query {
     author(name: String!): Author
     authors: [Author!]
@@ -20,3 +20,5 @@ export default `
     name: String!
   }
 `;
+
+export default authorSchema;

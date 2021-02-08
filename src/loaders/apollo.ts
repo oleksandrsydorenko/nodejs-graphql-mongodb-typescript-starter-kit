@@ -7,14 +7,14 @@ import {
 import { makeExecutableSchema } from 'graphql-tools';
 
 import config from '@config';
-import * as models from '@models';
-import * as graphql from '@graphql';
+import { AuthorModel, BookModel } from '@models';
 import { IContext } from '@ts';
+import { resolvers, schema } from '@graphql';
 
 const context: IContext = {
   models: {
-    Author: models.AuthorModel,
-    Book: models.BookModel,
+    Author: AuthorModel,
+    Book: BookModel,
   },
 };
 
@@ -24,9 +24,9 @@ export default (app: Application): void => {
     introspection: config.env.isDevelopment,
     playground: config.env.isDevelopment,
     schema: makeExecutableSchema({
-      resolvers: graphql.resolvers,
+      resolvers,
       schemaTransforms: [constraintDirective()],
-      typeDefs: [constraintDirectiveTypeDefs, ...graphql.schema],
+      typeDefs: [constraintDirectiveTypeDefs, ...schema],
     }),
   });
 

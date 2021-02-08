@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { model, models, Schema } from 'mongoose';
 import { IBookDocument, IBookModel } from '@ts';
 
 const BookSchema: Schema = new Schema(

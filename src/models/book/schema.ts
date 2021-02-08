@@ -1,4 +1,4 @@
-export default `
+const bookSchema: string = `
   extend type Query {
     book(title: String!): Book
     books: [Book!]
@@ -20,3 +20,5 @@ export default `
     title: String!
   }
 `;
+
+export default bookSchema;

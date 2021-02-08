@@ -1,32 +1,7 @@
 import { ApolloError } from 'apollo-server';
 
 import { ERROR_MONGOOSE, ERROR_RESPONSE } from '@constants';
-import { IAuthorDocument, IBookDocument, IError, IResolver } from '@ts';
-
-interface IBookResolvers {
-  Query: {
-    book: IResolver<void, { title: string }, IBookDocument>;
-    books: IResolver<void, void, IBookDocument[]>;
-  };
-
-  Mutation: {
-    createBook: IResolver<
-      void,
-      { author: string; title: string },
-      IBookDocument
-    >;
-    deleteBook: IResolver<void, { title: string }, IBookDocument>;
-    updateBook: IResolver<
-      void,
-      { title: string; update: { title: string } },
-      IBookDocument
-    >;
-  };
-
-  Book: {
-    author: IResolver<IBookDocument, void, string>;
-  };
-}
+import { IAuthorDocument, IBookDocument, IError, IBookResolvers } from '@ts';
 
 const bookResolvers: IBookResolvers = {
   Query: {
