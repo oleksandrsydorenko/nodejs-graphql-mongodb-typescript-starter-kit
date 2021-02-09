@@ -1,7 +1,6 @@
-import { connect, connection } from 'mongoose';
+import { connect, connection, models } from 'mongoose';
 
 import config from '@config';
-
 import { logError, logInfo, terminateProcess } from '@utils';
 
 export default async (): Promise<void> => {
@@ -21,6 +20,13 @@ export default async (): Promise<void> => {
       useUnifiedTopology: true,
       user: config.mongoose.username,
     });
+
+    if (config.mongoose.isErasingEnabled) {
+      await Promise.all(
+        Object.values(models).map(async model => model.deleteMany({})),
+      );
+      logInfo('Data erased successfully');
+    }
   } catch (e) {
     terminateProcess(e);
   }

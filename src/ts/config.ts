@@ -30,6 +30,7 @@ export interface IMongooseUrlScheme {
 }
 
 export interface IMongooseConfig extends IMongooseUrlScheme {
+  isErasingEnabled: boolean;
   name: string;
   password: string | undefined;
   url: string;
