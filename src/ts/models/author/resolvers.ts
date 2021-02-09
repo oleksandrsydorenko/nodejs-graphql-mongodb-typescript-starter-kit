@@ -1,5 +1,6 @@
-import { IResolver } from '../graphql';
-import { IAuthorDocument, IBookDocument } from '../models';
+import { IResolver } from '@ts';
+import { IAuthorDocument } from './model';
+import { IBookDocument } from '../book';
 
 export interface IAuthorResolvers {
   Query: {
