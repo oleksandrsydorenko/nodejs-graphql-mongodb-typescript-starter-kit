@@ -1,18 +1,12 @@
 module.exports = {
   presets: [
-    [
-      // allows to use the latest ECMAScript features
-      '@babel/preset-env',
-      {
-        // allows to use some ECMAScript feature proposals
-        shippedProposals: true,
-      },
-    ],
+    // allows to use the latest ECMAScript features
+    '@babel/preset-env',
     // allows to use TypeScript features
     '@babel/preset-typescript',
   ],
   plugins: [
-    // enables re-using of Babel's helpers
+    // enables reusing of Babel's helpers to save on codesize
     '@babel/plugin-transform-runtime',
     [
       // enables modules aliases
@@ -33,20 +27,9 @@ module.exports = {
   ],
   env: {
     development: {
-      // disables omitting newlines and whitespace
+      // disables omitting newlines and whitespace when transpiles code
       compact: false,
     },
-    production: {
-      presets: [
-        // minifies transpiled code
-        [
-          'minify',
-          {
-            // removes debugger statements
-            removeDebugger: true,
-          },
-        ],
-      ],
-    },
   },
+  ignore: ['src/ts'],
 };
