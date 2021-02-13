@@ -1,12 +1,12 @@
 import { IConfig } from '@ts';
-// NOTE: env config must be imported before others because it reads .env file
-import envConfig from './env';
+// NOTE: base config must be imported before others because it reads .env file
+import baseConfig from './base';
 import expressConfig from './express';
 import graphqlConfig from './graphql';
 import mongooseConfig from './mongoose';
 
 const config: IConfig = {
-  env: envConfig,
+  base: baseConfig,
   express: expressConfig,
   graphql: graphqlConfig,
   mongoose: mongooseConfig,

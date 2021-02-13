@@ -2,9 +2,9 @@ import express, { Application } from 'express';
 
 import config from './config';
 import loaders from './loaders';
-import { logInfo, terminateProcess } from './utils';
+import { log, terminateProcess } from './utils';
 
-const startServer: Function = async (): Promise<void> => {
+const startServer = async (): Promise<void> => {
   const app: Application = express();
 
   try {
@@ -15,10 +15,10 @@ const startServer: Function = async (): Promise<void> => {
 
   app
     .listen(config.express.port, () => {
-      logInfo(`Express Server is running on ${config.express.url}`);
+      log.info(`Express Server is running on ${config.express.url}`);
 
-      if (config.env.isDevelopment) {
-        logInfo(
+      if (config.base.env.isDevelopment) {
+        log.info(
           `Apollo GraphQL playground is running on ${config.graphql.url}`,
         );
       }

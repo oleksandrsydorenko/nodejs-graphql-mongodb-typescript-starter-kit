@@ -1,6 +1,6 @@
 import { CONFIG_DEFAULT } from '@constants';
 import { IMongooseConfig, IMongooseUrlScheme, IProcessEnv } from '@ts';
-import envConfig from './env';
+import baseConfig from './base';
 
 const {
   DB_HOST,
@@ -24,7 +24,8 @@ const urlScheme: IMongooseUrlScheme = {
 
 const config: IMongooseConfig = {
   ...urlScheme,
-  isErasingEnabled: envConfig.isDevelopment && DB_ERASING_ENABLED === 'true',
+  isErasingEnabled:
+    baseConfig.env.isDevelopment && DB_ERASING_ENABLED === 'true',
   name: DB_NAME,
   password: DB_PASSWORD,
   url: `${urlScheme.protocol}://${urlScheme.host}${

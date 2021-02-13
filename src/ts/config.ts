@@ -1,7 +1,10 @@
-export interface IEnvConfig {
-  isDevelopment: boolean;
-  isProduction: boolean;
-  type: string;
+export interface IBaseConfig {
+  debugConfig: string;
+  env: {
+    isDevelopment: boolean;
+    isProduction: boolean;
+    type: string;
+  };
 }
 
 export interface IExpressUrlScheme {
@@ -42,7 +45,7 @@ export interface IProcessEnv {
 }
 
 export interface IConfig {
-  env: IEnvConfig;
+  base: IBaseConfig;
   express: IExpressConfig;
   graphql: IGraphQLConfig;
   mongoose: IMongooseConfig;

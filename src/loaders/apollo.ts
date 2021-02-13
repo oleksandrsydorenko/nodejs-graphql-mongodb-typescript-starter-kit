@@ -21,8 +21,8 @@ const context: IContext = {
 export default (app: Application): void => {
   const server: ApolloServer = new ApolloServer({
     context,
-    introspection: config.env.isDevelopment,
-    playground: config.env.isDevelopment,
+    introspection: config.base.env.isDevelopment,
+    playground: config.base.env.isDevelopment,
     schema: makeExecutableSchema({
       resolvers,
       schemaTransforms: [constraintDirective()],

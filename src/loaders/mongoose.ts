@@ -1,12 +1,12 @@
 import { connect, connection, models } from 'mongoose';
 
 import config from '@config';
-import { logError, logInfo, terminateProcess } from '@utils';
+import { log, terminateProcess } from '@utils';
 
 export default async (): Promise<void> => {
-  connection.on('error', logError);
+  connection.on('error', log.error);
   connection.on('open', () => {
-    logInfo(
+    log.info(
       `Mongoose is connected to ${config.mongoose.url}/${config.mongoose.name}`,
     );
   });
@@ -25,7 +25,7 @@ export default async (): Promise<void> => {
       await Promise.all(
         Object.values(models).map(async model => model.deleteMany({})),
       );
-      logInfo('Data erased successfully');
+      log.info('Data erased successfully');
     }
   } catch (e) {
     terminateProcess(e);
