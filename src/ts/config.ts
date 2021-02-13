@@ -41,8 +41,11 @@ export interface IMongooseUrlScheme {
 }
 
 export interface IMongooseConfig extends IMongooseUrlScheme {
+  dbName: string;
+  isCreateIndexEnabled: boolean;
   isErasingEnabled: boolean;
-  name: string;
+  isNewUrlParserEnabled: boolean;
+  isUnifiedTopologyEnabled: boolean;
   password: string | undefined;
   url: string;
   username: string | undefined;

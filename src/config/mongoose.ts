@@ -24,9 +24,12 @@ const urlScheme: IMongooseUrlScheme = {
 
 const config: IMongooseConfig = {
   ...urlScheme,
+  dbName: DB_NAME,
+  isCreateIndexEnabled: true,
   isErasingEnabled:
     baseConfig.env.isDevelopment && DB_ERASING_ENABLED === 'true',
-  name: DB_NAME,
+  isNewUrlParserEnabled: true,
+  isUnifiedTopologyEnabled: true,
   password: DB_PASSWORD,
   url: `${urlScheme.protocol}://${urlScheme.host}${
     urlScheme.port ? `:${urlScheme.port}` : ''

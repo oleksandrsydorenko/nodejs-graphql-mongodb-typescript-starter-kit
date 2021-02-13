@@ -3,25 +3,37 @@ import { connect, connection, models } from 'mongoose';
 import config from '@config';
 import { log, terminateProcess } from '@utils';
 
+const {
+  dbName,
+  isCreateIndexEnabled,
+  isErasingEnabled,
+  isNewUrlParserEnabled,
+  isUnifiedTopologyEnabled,
+  password,
+  url,
+  username,
+} = config.mongoose;
+
 export default async (): Promise<void> => {
   connection.on('error', log.error);
   connection.on('open', () => {
-    log.info(
-      `Mongoose is connected to ${config.mongoose.url}/${config.mongoose.name}`,
-    );
+    log.info(`Mongoose is connected to ${url}/${dbName}`);
   });
 
   try {
-    await connect(config.mongoose.url, {
-      dbName: config.mongoose.name,
-      pass: config.mongoose.password,
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      user: config.mongoose.username,
+    await connect(url, {
+      dbName,
+      pass: password,
+      // enables new driver's createIndex() instead of the old ensureIndex() one
+      useCreateIndex: isCreateIndexEnabled,
+      // enables new url connection string parser
+      useNewUrlParser: isNewUrlParserEnabled,
+      // enables new server discover and monitoring engine
+      useUnifiedTopology: isUnifiedTopologyEnabled,
+      user: username,
     });
 
-    if (config.mongoose.isErasingEnabled) {
+    if (isErasingEnabled) {
       await Promise.all(
         Object.values(models).map(async model => model.deleteMany({})),
       );
