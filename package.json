@@ -32,6 +32,7 @@
     "@babel/runtime": "^7.12.5",
     "apollo-server": "^2.19.2",
     "apollo-server-express": "^2.19.2",
+    "apollo-server-plugin-response-cache": "^0.6.0",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

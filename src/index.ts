@@ -19,7 +19,7 @@ const startServer = async (): Promise<void> => {
 
       if (config.base.env.isDevelopment) {
         log.info(
-          `Apollo GraphQL playground is running on ${config.graphql.url}`,
+          `Apollo GraphQL playground is running on ${config.apollo.url}`,
         );
       }
     })

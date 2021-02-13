@@ -1,7 +1,7 @@
 const authorSchema: string = `
   extend type Query {
     author(name: String!): Author
-    authors: [Author!]
+    authors: [Author!] @cacheControl(maxAge: 5)
   }
 
   extend type Mutation {

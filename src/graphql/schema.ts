@@ -1,4 +1,5 @@
 import { authorSchema, bookSchema } from '@models';
+import directives from './directives';
 
 const root: string = `
   type Query {
@@ -10,4 +11,4 @@ const root: string = `
   }
 `;
 
-export default [root, authorSchema, bookSchema];
+export default [...directives, root, authorSchema, bookSchema];

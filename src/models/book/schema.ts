@@ -1,7 +1,7 @@
 const bookSchema: string = `
   extend type Query {
     book(title: String!): Book
-    books: [Book!]
+    books: [Book!] @cacheControl(maxAge: 5)
   }
 
   extend type Mutation {

@@ -7,6 +7,23 @@ export interface IBaseConfig {
   };
 }
 
+export interface IApolloUrlScheme {
+  path: string;
+}
+
+export interface IApolloConfig extends IApolloUrlScheme {
+  cacheOptions: {
+    isExtensionFormattingEnabled: boolean;
+    isHttpHeadersAllowed: boolean;
+    maxAge: number;
+  };
+  isIntrospectionEnabled: boolean;
+  isPlaygroundEnabled: boolean;
+  isTracingEnabled: boolean;
+  origin: boolean | string | string[];
+  url: string;
+}
+
 export interface IExpressUrlScheme {
   host: string;
   port: number | null;
@@ -14,15 +31,6 @@ export interface IExpressUrlScheme {
 }
 
 export interface IExpressConfig extends IExpressUrlScheme {
-  url: string;
-}
-
-export interface IGraphQLUrlScheme {
-  path: string;
-}
-
-export interface IGraphQLConfig extends IGraphQLUrlScheme {
-  origin: boolean | string | string[];
   url: string;
 }
 
@@ -46,7 +54,7 @@ export interface IProcessEnv {
 
 export interface IConfig {
   base: IBaseConfig;
+  apollo: IApolloConfig;
   express: IExpressConfig;
-  graphql: IGraphQLConfig;
   mongoose: IMongooseConfig;
 }
