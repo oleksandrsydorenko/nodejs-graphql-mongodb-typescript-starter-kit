@@ -31,12 +31,15 @@ const stack: StackUtils = new StackUtils({
 });
 
 const loggerWrapped: LoggerWrapped = logger => (...args) => {
-  const logs: any =
+  const logData: any =
     args[0] instanceof Error
-      ? `${args[0].message}\n${stack.clean(args[0].stack || '')}`
+      ? [
+          `${args[0].message}\n${stack.clean(args[0].stack || '')}`,
+          ...args.slice(1),
+        ]
       : args;
 
-  logger(...logs);
+  logger(...logData);
 };
 
 export const debug: Logger = (...args) => loggerWrapped(logDebug)(...args);
