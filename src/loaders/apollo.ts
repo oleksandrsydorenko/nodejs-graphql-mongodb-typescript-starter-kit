@@ -1,3 +1,4 @@
+import depthLimit from 'graphql-depth-limit';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
@@ -24,6 +25,7 @@ const {
   isIntrospectionEnabled,
   isPlaygroundEnabled,
   isTracingEnabled,
+  maxDepth,
   origin,
   path,
 } = config.apollo;
@@ -47,6 +49,7 @@ export default (app: Application): void => {
       typeDefs: [constraintDirectiveTypeDefs, ...schema],
     }),
     tracing: isTracingEnabled,
+    validationRules: [depthLimit(maxDepth)],
   });
 
   server.applyMiddleware({

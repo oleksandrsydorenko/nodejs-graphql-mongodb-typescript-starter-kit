@@ -20,6 +20,7 @@ export interface IApolloConfig extends IApolloUrlScheme {
   isIntrospectionEnabled: boolean;
   isPlaygroundEnabled: boolean;
   isTracingEnabled: boolean;
+  maxDepth: number;
   origin: boolean | string | string[];
   url: string;
 }

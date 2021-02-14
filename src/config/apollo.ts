@@ -21,6 +21,7 @@ const config: IApolloConfig = {
   isIntrospectionEnabled: baseConfig.env.isDevelopment,
   isPlaygroundEnabled: baseConfig.env.isDevelopment,
   isTracingEnabled: baseConfig.env.isDevelopment,
+  maxDepth: 3,
   origin: SERVER_ALLOWED_ORIGINS ? SERVER_ALLOWED_ORIGINS.split(',') : false,
   url: `${expressConfig.url}${urlScheme.path}`,
 };
