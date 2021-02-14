@@ -62,6 +62,7 @@
     "@types/stack-utils": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-import-graphql": "^2.8.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.18.0",

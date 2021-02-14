@@ -8,6 +8,8 @@ module.exports = {
   plugins: [
     // enables reusing of Babel's helpers to save on codesize
     '@babel/plugin-transform-runtime',
+    // enables importing GraphQL schemas from files with extension .graphql/.gql
+    'import-graphql',
     [
       // enables modules aliases
       'module-resolver',
@@ -31,5 +33,6 @@ module.exports = {
       compact: false,
     },
   },
+  // ignores files for transpiling
   ignore: ['src/ts'],
 };
