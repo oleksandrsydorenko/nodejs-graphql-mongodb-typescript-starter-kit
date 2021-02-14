@@ -17,7 +17,7 @@ const {
 export default async (): Promise<void> => {
   connection.on('error', log.error);
   connection.on('open', () => {
-    log.info(`Mongoose is connected to ${url}/${dbName}`);
+    log.info('Mongoose is connected to %s/%s', url, dbName);
   });
 
   try {

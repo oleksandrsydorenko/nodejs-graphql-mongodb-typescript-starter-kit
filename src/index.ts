@@ -15,11 +15,12 @@ const startServer = async (): Promise<void> => {
 
   app
     .listen(config.express.port, () => {
-      log.info(`Express Server is running on ${config.express.url}`);
+      log.info('Express Server is running on %s', config.express.url);
 
       if (config.base.env.isDevelopment) {
         log.info(
-          `Apollo GraphQL playground is running on ${config.apollo.url}`,
+          'Apollo GraphQL playground is running on %s',
+          config.apollo.url,
         );
       }
     })

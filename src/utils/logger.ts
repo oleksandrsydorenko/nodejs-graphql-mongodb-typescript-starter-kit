@@ -3,7 +3,8 @@ import StackUtils from 'stack-utils';
 
 import config from '@config';
 
-type Logger = (message: any) => void;
+type Logger = (...args: any[]) => void;
+type LoggerWrapped = (logger: Logger) => (...args: any[]) => void;
 
 const logDebug: Debugger = createDebug('debug');
 const logError: Debugger = createDebug('error');
@@ -29,13 +30,17 @@ const stack: StackUtils = new StackUtils({
   internals: StackUtils.nodeInternals(),
 });
 
-const convertErrorToString = (input: any): string =>
-  input instanceof Error
-    ? `${input.message}\n${stack.clean(input.stack || '')}`
-    : JSON.stringify(input);
+const loggerWrapped: LoggerWrapped = logger => (...args) => {
+  const logs: any =
+    args[0] instanceof Error
+      ? `${args[0].message}\n${stack.clean(args[0].stack || '')}`
+      : args;
 
-export const debug: Logger = message => logDebug(convertErrorToString(message));
-export const error: Logger = message => logError(convertErrorToString(message));
-export const http: Logger = message => logHttp(message);
-export const info: Logger = message => logInfo(message);
-export const warn: Logger = message => logWarn(message);
+  logger(...logs);
+};
+
+export const debug: Logger = (...args) => loggerWrapped(logDebug)(...args);
+export const error: Logger = (...args) => loggerWrapped(logError)(...args);
+export const http: Logger = (...args) => loggerWrapped(logHttp)(...args);
+export const info: Logger = (...args) => loggerWrapped(logInfo)(...args);
+export const warn: Logger = (...args) => loggerWrapped(logWarn)(...args);
