@@ -2,7 +2,7 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "exec": "rimraf ./node_modules/.cache/babel-loader && babel-node ./src/index.ts --extensions \".js,.ts\"",
+  "exec": "rimraf ./node_modules/.cache/@babel && babel-node ./src/index.ts --extensions \".js,.ts\"",
   "ext": "gql, graphql, js, json, ts, yaml",
   "ignore": ["src/**/*.spec.ts"],
   "watch": [".env", "babel.config.js", "src", "tsconfig.json"]
