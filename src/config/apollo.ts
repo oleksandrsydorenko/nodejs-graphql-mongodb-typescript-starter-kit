@@ -9,19 +9,23 @@ const urlScheme: IApolloUrlScheme = {
   path: '/graphql',
 };
 
-const CACHE_MAX_AGE_IN_SECONDS = 60;
-
 const config: IApolloConfig = {
   ...urlScheme,
-  cacheOptions: {
+  cache: {
     isExtensionFormattingEnabled: false,
     isHttpHeadersAllowed: true,
-    maxAge: CACHE_MAX_AGE_IN_SECONDS,
+    // in seconds
+    maxAge: 60,
   },
   isIntrospectionEnabled: baseConfig.env.isDevelopment,
   isPlaygroundEnabled: baseConfig.env.isDevelopment,
   isTracingEnabled: baseConfig.env.isDevelopment,
-  maxDepth: 3,
+  query: {
+    depth: {
+      ignoreList: [],
+      max: 3,
+    },
+  },
   origin: SERVER_ALLOWED_ORIGINS ? SERVER_ALLOWED_ORIGINS.split(',') : false,
   url: `${expressConfig.url}${urlScheme.path}`,
 };

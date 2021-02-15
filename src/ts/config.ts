@@ -12,7 +12,7 @@ export interface IApolloUrlScheme {
 }
 
 export interface IApolloConfig extends IApolloUrlScheme {
-  cacheOptions: {
+  cache: {
     isExtensionFormattingEnabled: boolean;
     isHttpHeadersAllowed: boolean;
     maxAge: number;
@@ -20,8 +20,13 @@ export interface IApolloConfig extends IApolloUrlScheme {
   isIntrospectionEnabled: boolean;
   isPlaygroundEnabled: boolean;
   isTracingEnabled: boolean;
-  maxDepth: number;
   origin: boolean | string | string[];
+  query: {
+    depth: {
+      ignoreList: Array<string | RegExp | ((queryDepths: any[]) => boolean)>;
+      max: number;
+    };
+  };
   url: string;
 }
 
