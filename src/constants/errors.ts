@@ -7,19 +7,19 @@ export const ERROR_MONGOOSE: IErrorMongoose = {
 export const ERROR_RESPONSE: IErrorResponse = {
   AUTHOR_EXISTS: {
     code: 'AUTHOR_EXISTS',
-    message: 'Author already exists',
+    message: 'Author with provided name already exists',
   },
   AUTHOR_DOES_NOT_EXISTS: {
     code: 'AUTHOR_DOES_NOT_EXIST',
-    message: 'Author does not exist',
+    message: 'Author with provided name does not exist',
   },
   BOOK_EXISTS: {
     code: 'BOOK_EXISTS',
-    message: 'Book already exists',
+    message: 'Book with provided author already exists',
   },
   BOOK_DOES_NOT_EXISTS: {
     code: 'BOOK_DOES_NOT_EXIST',
-    message: 'Book does not exist',
+    message: 'Book with provided author does not exist',
   },
   INTERNAL_SERVER_ERROR: {
     code: 'INTERNAL_SERVER_ERROR',

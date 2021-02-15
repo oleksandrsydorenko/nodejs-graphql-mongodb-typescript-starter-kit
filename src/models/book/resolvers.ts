@@ -1,7 +1,7 @@
 import { ApolloError } from 'apollo-server';
 
-import { ERROR_MONGOOSE, ERROR_RESPONSE } from '@constants';
-import { IAuthorDocument, IBookDocument, IError, IBookResolvers } from '@ts';
+import { ERROR_RESPONSE } from '@constants';
+import { IAuthorDocument, IBookDocument, IBookResolvers } from '@ts';
 
 const bookResolvers: IBookResolvers = {
   Query: {
@@ -23,6 +23,18 @@ const bookResolvers: IBookResolvers = {
         );
       }
 
+      const bookFromDb = await models.Book.findOne({
+        title,
+        authorId: authorFromDb._id,
+      });
+
+      if (bookFromDb) {
+        throw new ApolloError(
+          ERROR_RESPONSE.BOOK_EXISTS.message,
+          ERROR_RESPONSE.BOOK_EXISTS.code,
+        );
+      }
+
       const newBook: IBookDocument = new models.Book({
         title,
         authorId: authorFromDb._id,
@@ -31,12 +43,10 @@ const bookResolvers: IBookResolvers = {
       try {
         await newBook.save();
       } catch (e) {
-        const error: IError =
-          e.code === ERROR_MONGOOSE.DUPLICATE_KEY
-            ? ERROR_RESPONSE.BOOK_EXISTS
-            : ERROR_RESPONSE.INTERNAL_SERVER_ERROR;
-
-        throw new ApolloError(error.message, error.code);
+        throw new ApolloError(
+          ERROR_RESPONSE.INTERNAL_SERVER_ERROR.message,
+          ERROR_RESPONSE.INTERNAL_SERVER_ERROR.code,
+        );
       }
 
       authorFromDb.bookIds.push(newBook._id);
