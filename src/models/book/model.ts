@@ -18,17 +18,20 @@ const BookSchema: Schema = new Schema(
   },
 );
 
-BookSchema.post('findOneAndDelete', async function deleteOne(book) {
-  if (!book) {
-    return;
-  }
+BookSchema.post(
+  'findOneAndDelete',
+  async function findOneAndDeleteHook(book: IBookDocument) {
+    if (!book) {
+      return;
+    }
 
-  await models.Author.findOneAndUpdate(this.authorId, {
-    $pull: {
-      bookIds: book._id,
-    },
-  });
-});
+    await models.Author.findOneAndUpdate(this.authorId, {
+      $pull: {
+        bookIds: book._id,
+      },
+    });
+  },
+);
 
 const BookModel: IBookModel = model<IBookDocument, IBookModel>(
   'Book',

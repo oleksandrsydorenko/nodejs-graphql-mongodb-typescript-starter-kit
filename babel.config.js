@@ -6,7 +6,7 @@ module.exports = {
     '@babel/preset-typescript',
   ],
   plugins: [
-    // enables reusing of Babel's helpers to save on codesize
+    // enables reusing of Babel's helpers to save on code size
     '@babel/plugin-transform-runtime',
     // enables importing GraphQL schemas from files with extension .graphql/.gql
     'import-graphql',
@@ -29,10 +29,10 @@ module.exports = {
   ],
   env: {
     development: {
-      // disables omitting newlines and whitespace when transpiles code
+      // disables omitting newlines and whitespace when compiles code
       compact: false,
     },
   },
-  // ignores files for transpiling
+  // ignores files for compiling
   ignore: ['src/ts'],
 };

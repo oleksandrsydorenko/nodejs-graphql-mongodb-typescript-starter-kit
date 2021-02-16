@@ -22,13 +22,16 @@ const AuthorSchema: Schema = new Schema(
   },
 );
 
-AuthorSchema.post('findOneAndDelete', async function findOneAndDelete(author) {
-  if (!author) {
-    return;
-  }
+AuthorSchema.post(
+  'findOneAndDelete',
+  async function findOneAndDeleteHook(author: IAuthorDocument) {
+    if (!author) {
+      return;
+    }
 
-  await models.Book.deleteMany({ authorId: author._id });
-});
+    await models.Book.deleteMany({ authorId: author._id });
+  },
+);
 
 const AuthorModel: IAuthorModel = model<IAuthorDocument, IAuthorModel>(
   'Author',
