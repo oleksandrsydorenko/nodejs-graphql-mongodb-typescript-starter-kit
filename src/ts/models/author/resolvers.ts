@@ -1,20 +1,18 @@
-import { IResolver } from '@ts';
-import { IAuthorDocument } from './model';
-import { IBookDocument } from '../book';
+import { IAuthorDocument, IBookDocument, IResolver } from '@ts';
 
 export interface IAuthorResolvers {
   Query: {
-    author: IResolver<void, { name: string }, IAuthorDocument>;
+    author: IResolver<void, { name: string }, IAuthorDocument | null>;
     authors: IResolver<void, void, IAuthorDocument[]>;
   };
 
   Mutation: {
     createAuthor: IResolver<void, { name: string }, IAuthorDocument>;
-    deleteAuthor: IResolver<void, { name: string }, IAuthorDocument>;
+    deleteAuthor: IResolver<void, { name: string }, IAuthorDocument | null>;
     updateAuthor: IResolver<
       void,
       { name: string; update: { name: string } },
-      IAuthorDocument
+      IAuthorDocument | null
     >;
   };
 
