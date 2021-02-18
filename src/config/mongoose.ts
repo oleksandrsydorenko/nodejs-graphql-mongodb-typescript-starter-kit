@@ -25,10 +25,16 @@ const urlScheme: IMongooseUrlScheme = {
 const config: IMongooseConfig = {
   ...urlScheme,
   dbName: DB_NAME,
+  // enables new MongoDB driver's createIndex() function instead of the deprecated one ensureIndex()
   isCreateIndexEnabled: true,
+  // enables db collections erasing on server start
   isErasingEnabled:
     baseConfig.env.isDevelopment && DB_ERASING_ENABLED === 'true',
+  // enables deprecated MongoDB driver's findAndModify() function instead of the new one findOneAndUpdate()
+  isFindAndModifyEnabled: false,
+  // enables new url connection string parser
   isNewUrlParserEnabled: true,
+  // enables new server discovery and monitoring engine
   isUnifiedTopologyEnabled: true,
   password: DB_PASSWORD,
   url: `${urlScheme.protocol}://${urlScheme.host}${

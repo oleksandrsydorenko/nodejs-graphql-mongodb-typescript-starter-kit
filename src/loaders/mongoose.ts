@@ -7,6 +7,7 @@ const {
   dbName,
   isCreateIndexEnabled,
   isErasingEnabled,
+  isFindAndModifyEnabled,
   isNewUrlParserEnabled,
   isUnifiedTopologyEnabled,
   password,
@@ -24,11 +25,9 @@ export default async (): Promise<void> => {
     await connect(url, {
       dbName,
       pass: password,
-      // enables new driver's createIndex() instead of the old ensureIndex() one
       useCreateIndex: isCreateIndexEnabled,
-      // enables new url connection string parser
+      useFindAndModify: isFindAndModifyEnabled,
       useNewUrlParser: isNewUrlParserEnabled,
-      // enables new server discover and monitoring engine
       useUnifiedTopology: isUnifiedTopologyEnabled,
       user: username,
     });
