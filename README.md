@@ -33,15 +33,13 @@ or yarn:
 
 ## Usage
 
-1. Setup server.
-2. Deploy MongoDB.
-3. Connect database to server.
+1. Setup Express and MongoDB ([check here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit#environment-variables)).
 
 Then
 
 ### In development mode
 
-4. Run server
+2. Run application
 
 using npm:
 
@@ -53,9 +51,9 @@ using yarn:
 
 ### In production mode
 
-4. Deploy server to your host.
+2. Deploy application.
 
-5. Build server:
+3. Build application
 
 using npm:
 
@@ -65,7 +63,7 @@ using yarn:
 
 `yarn build`
 
-6. Run server:
+4. Run application
 
 using npm:
 
@@ -77,22 +75,22 @@ using yarn:
 
 ## Environment variables
 
-`DB_ERASING_ENABLED` - enables erasing database on server start (set value to `true`).\
+`DB_ERASING_ENABLED` - enables erasing database on application start (set value to `true`).\
 `DB_NAME`\* - database name.\
 `DB_HOST`\* - database host.\
 `DB_PASSWORD` - database password.\
-`DB_PORT`\* - database port.\
+`DB_PORT` - database port.\
 `DB_PROTOCOL`\* - database protocol.\
 `DB_USERNAME` - database username.\
 `DEBUG` - debug utility config ([read here](https://github.com/visionmedia/debug#readme)).\
 `SERVER_ALLOWED_ORIGINS` - list of origins allowed to connect to server separated by comma.\
 `SERVER_HOST`\* - server host.\
-`SERVER_PORT`\* - server port.\
+`SERVER_PORT` - server port.\
 `SERVER_PROTOCOL`\* - server protocol.
 
 \* - required.
 
-You can find examples [here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit/blob/master/.env.example).
+Find examples [here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit/blob/master/.env.example).
 
 ## Scripts
 
@@ -100,15 +98,15 @@ You can find examples [here](https://github.com/oleksandrsydorenko/nodejs-graphq
 `lint` - runs ESlint and Prettier\
 `lint:eslint` - runs ESlint linter\
 `lint:prettier` - runs Prettier code formatter\
-`serve` - runs server in production mode\
-`start` - runs server in development mode\
-`start:db` - runs mongodb locally (needs MongoDB to be deployed locally)\
+`serve` - runs application in production mode (requires `dist` folder with compiled sources)\
+`start` - runs application in development mode\
+`start:db` - runs MongoDB locally (needs MongoDB to be deployed locally)\
 `test:coverage` - runs Jest and generates code coverage report\
 `test:debug` - runs Jest in debug mode\
 `test:silent` - runs Jest in silent mode\
 `test:watch` - runs Jest in watch mode\
-`ts:check` - compiles TypeScript without outputs\
-`ts:watch` - compiles TypeScript without outputs in watch mode
+`ts:check` - compiles TypeScript without output\
+`ts:watch` - compiles TypeScript without output in watch mode
 
 ## Stack
 
