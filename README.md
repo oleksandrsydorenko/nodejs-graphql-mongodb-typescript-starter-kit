@@ -1,8 +1,10 @@
 # NodeJS-GraphQL-MongoDB-TypeScript Starter Kit
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](/LICENSE)
+[![License MIT badge](https://img.shields.io/badge/License-MIT-red.svg)](/LICENSE) [![Up to date dependencies status badge](https://status.david-dm.org/gh/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit.svg)](https://david-dm.org/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit) [![Up to date devDependencies status badge](https://status.david-dm.org/gh/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit.svg?type=dev)](https://david-dm.org/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit?type=dev)
 
 Starter kit for [Node.js](https://nodejs.org/) web applications build on [Express](https://expressjs.com/), [Apollo Server](https://www.apollographql.com/docs/apollo-server/), [Mongoose](https://mongoosejs.com/), [Babel](https://babeljs.io/), [TypeScript](https://www.typescriptlang.org/) stack with preconfigured [ESlint](https://eslint.org/), [Prettier](https://prettier.io/), [Lint-Staged](https://github.com/okonet/lint-staged), [Commitlint](https://github.com/conventional-changelog/commitlint), [Husky](https://github.com/typicode/husky) and [Jest](https://jestjs.io/).
+
+![NodeJS-GraphQL-MongoDB-TypeScript Starter Kit](logo.png 'NodeJS-GraphQL-MongoDB-TypeScript Starter Kit')
 
 ## Features
 
@@ -33,7 +35,7 @@ or yarn:
 
 ## Usage
 
-1. Setup Express and MongoDB ([check here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit#environment-variables)).
+1. Setup Express and MongoDB ([read here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit#environment-variables)).
 
 Then
 
