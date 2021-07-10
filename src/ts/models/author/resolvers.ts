@@ -17,6 +17,8 @@ export interface IAuthorResolvers {
   };
 
   Author: {
+    id: IResolver<IAuthorDocument, void, string>;
     books: IResolver<IAuthorDocument, void, IBookDocument[]>;
+    name: IResolver<IAuthorDocument, void, string>;
   };
 }

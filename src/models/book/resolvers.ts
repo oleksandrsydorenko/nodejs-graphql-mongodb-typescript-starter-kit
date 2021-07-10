@@ -11,25 +11,27 @@ const getAuthorNotExistError = (): ApolloError =>
 
 const bookResolvers: IBookResolvers = {
   Query: {
-    book: async (_parent, { title }, { models }) =>
-      models.Book.findOne({ title }),
-    books: async (_parent, _args, { models }) => models.Book.find(),
+    book: async (_, args, context) =>
+      context.models.Book.findOne({ title: args.title }),
+    books: async (_, __, context) => context.models.Book.find(),
   },
 
   Mutation: {
-    createBook: async (_parent, { author, title }, { models }) => {
-      const authorFromDb: IAuthorDocument | null = await models.Author.findOne({
-        name: author,
-      });
+    createBook: async (_, args, context) => {
+      const authorFromDb: IAuthorDocument | null =
+        await context.models.Author.findOne({
+          name: args.author,
+        });
 
       if (!authorFromDb) {
         throw getAuthorNotExistError();
       }
 
-      const bookFromDb: IBookDocument | null = await models.Book.findOne({
-        title,
-        authorId: authorFromDb._id,
-      });
+      const bookFromDb: IBookDocument | null =
+        await context.models.Book.findOne({
+          authorId: authorFromDb._id,
+          title: args.title,
+        });
 
       if (bookFromDb) {
         throw new ApolloError(
@@ -38,9 +40,9 @@ const bookResolvers: IBookResolvers = {
         );
       }
 
-      const newBook: IBookDocument = new models.Book({
-        title,
+      const newBook: IBookDocument = new context.models.Book({
         authorId: authorFromDb._id,
+        title: args.title,
       });
 
       try {
@@ -57,39 +59,46 @@ const bookResolvers: IBookResolvers = {
 
       return newBook;
     },
-    deleteBook: async (_parent, { author, title }, { models }) => {
-      const authorFromDb: IAuthorDocument | null = await models.Author.findOne({
-        name: author,
-      });
+    deleteBook: async (_, args, context) => {
+      const authorFromDb: IAuthorDocument | null =
+        await context.models.Author.findOne({
+          name: args.author,
+        });
 
       if (!authorFromDb) {
         throw getAuthorNotExistError();
       }
 
-      return models.Book.findOneAndDelete({
-        title,
-        authorId: authorFromDb._id.toString(),
+      return context.models.Book.findOneAndDelete({
+        authorId: authorFromDb.id,
+        title: args.title,
       });
     },
-    updateBook: async (_parent, { author, title, update }, { models }) => {
-      const authorFromDb: IAuthorDocument | null = await models.Author.findOne({
-        name: author,
-      });
+    updateBook: async (_, args, context) => {
+      const authorFromDb: IAuthorDocument | null =
+        await context.models.Author.findOne({
+          name: args.author,
+        });
 
       if (!authorFromDb) {
         throw getAuthorNotExistError();
       }
 
-      return models.Book.findOneAndUpdate(
-        { title, authorId: authorFromDb._id },
-        update,
+      return context.models.Book.findOneAndUpdate(
+        {
+          authorId: authorFromDb._id,
+          title: args.title,
+        },
+        args.update,
       );
     },
   },
 
   Book: {
-    author: async (book, _args, { models }) =>
-      models.Author.findById(book.authorId),
+    id: parent => parent.id.toString(),
+    author: async (parent, _, context) =>
+      context.models.Author.findById(parent.authorId),
+    title: parent => parent.title,
   },
 };
 

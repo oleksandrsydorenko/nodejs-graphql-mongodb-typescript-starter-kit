@@ -35,7 +35,7 @@ AuthorSchema.post(
       );
     }
 
-    await models.Book.deleteMany({ authorId: author._id });
+    await models.Book.deleteMany({ authorId: author.id.toString() });
   },
 );
 

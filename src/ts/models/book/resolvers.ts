@@ -25,6 +25,8 @@ export interface IBookResolvers {
   };
 
   Book: {
+    id: IResolver<IBookDocument, void, string>;
     author: IResolver<IBookDocument, void, IAuthorDocument | null>;
+    title: IResolver<IBookDocument, void, string>;
   };
 }

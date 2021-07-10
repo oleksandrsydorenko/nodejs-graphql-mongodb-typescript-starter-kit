@@ -5,16 +5,16 @@ import { IAuthorDocument, IAuthorResolvers, IError } from '@ts';
 
 const authorResolvers: IAuthorResolvers = {
   Query: {
-    author: async (_parent, { name }, { models }) =>
-      models.Author.findOne({ name }),
-    authors: async (_parent, _args, { models }) => models.Author.find(),
+    author: async (_, args, context) =>
+      context.models.Author.findOne({ name: args.name }),
+    authors: async (_, __, context) => context.models.Author.find(),
   },
 
   Mutation: {
-    createAuthor: async (_parent, { name }, { models }) => {
-      const newAuthor: IAuthorDocument = new models.Author({
-        name,
+    createAuthor: async (_, args, context) => {
+      const newAuthor: IAuthorDocument = new context.models.Author({
         bookIds: [],
+        name: args.name,
       });
 
       try {
@@ -30,15 +30,17 @@ const authorResolvers: IAuthorResolvers = {
         throw new ApolloError(errorResponse.message, errorResponse.code);
       }
     },
-    deleteAuthor: async (_parent, { name }, { models }) =>
-      models.Author.findOneAndDelete({ name }),
-    updateAuthor: async (_parent, { name, update }, { models }) =>
-      models.Author.findOneAndUpdate({ name }, update),
+    deleteAuthor: async (_, args, context) =>
+      context.models.Author.findOneAndDelete({ name: args.name }),
+    updateAuthor: async (_, args, context) =>
+      context.models.Author.findOneAndUpdate({ name: args.name }, args.update),
   },
 
   Author: {
-    books: async (author, _args, { models }) =>
-      models.Book.find({ authorId: author._id }),
+    id: parent => parent.id.toString(),
+    books: async (parent, _, context) =>
+      context.models.Book.find({ authorId: parent._id }),
+    name: parent => parent.name,
   },
 };
 

@@ -11,4 +11,4 @@ export type IResolver<TParent, TArgs, TResponse> = (
   parent: TParent,
   args: TArgs,
   context: IContext,
-) => Promise<TResponse>;
+) => TResponse | Promise<TResponse>;
