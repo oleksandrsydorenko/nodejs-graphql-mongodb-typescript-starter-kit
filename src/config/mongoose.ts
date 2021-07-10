@@ -17,9 +17,9 @@ if (!DB_NAME) {
 }
 
 const urlScheme: IMongooseUrlScheme = {
-  host: DB_HOST || CONFIG_DEFAULT.HOST,
-  port: DB_PORT ? parseInt(DB_PORT, 10) : null,
-  protocol: DB_PROTOCOL || 'mongodb',
+  host: DB_HOST || CONFIG_DEFAULT.DB_HOST,
+  port: DB_PORT ? parseInt(DB_PORT, 10) : CONFIG_DEFAULT.DB_PORT,
+  protocol: DB_PROTOCOL || CONFIG_DEFAULT.DB_PROTOCOL,
 };
 
 const config: IMongooseConfig = {

@@ -17,6 +17,7 @@ const config: IApolloConfig = {
     // in seconds
     maxAge: 60,
   },
+  isDebugEnabled: baseConfig.env.isDevelopment,
   isIntrospectionEnabled: baseConfig.env.isDevelopment,
   isPlaygroundEnabled: baseConfig.env.isDevelopment,
   isTracingEnabled: baseConfig.env.isDevelopment,

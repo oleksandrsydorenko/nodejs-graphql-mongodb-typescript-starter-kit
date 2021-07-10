@@ -1,17 +1,22 @@
 import { IError } from './base';
 
 export interface IConfigDefault {
-  HOST: string;
+  readonly DB_HOST: string;
+  readonly DB_PORT: number;
+  readonly DB_PROTOCOL: string;
+  readonly SERVER_HOST: string;
+  readonly SERVER_PORT: number;
+  readonly SERVER_PROTOCOL: string;
 }
 
 export interface IErrorMongoose {
-  DUPLICATE_KEY: number;
+  readonly DUPLICATE_KEY: number;
 }
 
 export interface IErrorResponse {
-  AUTHOR_EXISTS: IError;
-  AUTHOR_DOES_NOT_EXISTS: IError;
-  BOOK_EXISTS: IError;
-  BOOK_DOES_NOT_EXISTS: IError;
-  INTERNAL_SERVER_ERROR: IError;
+  readonly AUTHOR_EXISTS: IError;
+  readonly AUTHOR_DOES_NOT_EXISTS: IError;
+  readonly BOOK_EXISTS: IError;
+  readonly BOOK_DOES_NOT_EXISTS: IError;
+  readonly INTERNAL_SERVER_ERROR: IError;
 }

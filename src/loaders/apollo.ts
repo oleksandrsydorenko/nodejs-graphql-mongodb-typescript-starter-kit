@@ -28,6 +28,7 @@ const context: IContext = {
 
 const {
   cache,
+  isDebugEnabled,
   isIntrospectionEnabled,
   isPlaygroundEnabled,
   isTracingEnabled,
@@ -42,9 +43,10 @@ export default (app: Application): void => {
     cacheControl: {
       calculateHttpHeaders: cache.isHttpHeadersAllowed,
       defaultMaxAge: cache.maxAge,
-      // https://github.com/apollographql/apollo-server/blob/main/packages/apollo-cache-control/src/index.ts
+      // https://github.com/apollographql/apollo-server/blob/main/packages/apollo-cache-control/src/index.ts#L165
       stripFormattedExtensions: cache.isExtensionFormattingEnabled,
     },
+    debug: isDebugEnabled,
     introspection: isIntrospectionEnabled,
     playground: isPlaygroundEnabled,
     plugins: [responseCachePlugin()],
@@ -63,9 +65,8 @@ export default (app: Application): void => {
             return;
           }
 
-          const [operation, depth]: [string, number] = Object.entries(
-            queryDepth,
-          )[0];
+          const [operation, depth]: [string, number] =
+            Object.entries(queryDepth)[0];
           const queryName = operation || 'Query';
 
           if (Number.isNaN(depth)) {
