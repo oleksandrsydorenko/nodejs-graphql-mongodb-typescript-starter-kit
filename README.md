@@ -35,13 +35,27 @@ or yarn:
 
 ## Usage
 
-1. Setup Express and MongoDB ([read here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit#environment-variables)).
+1. Setup Express and MongoDB environment variables ([read here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongodb-typescript-starter-kit#environment-variables)).
 
 Then
 
 ### In development mode
 
-2. Run application
+2. Install Docker.
+
+3. Pull [Mongo](https://hub.docker.com/_/mongo) and [Mongo-Express](https://hub.docker.com/_/mongo-express) docker images from [DockerHub](https://hub.docker.com/).
+
+4. Run database
+
+using npm:
+
+`npm run start:db`
+
+using yarn:
+
+`yarn start:db`
+
+5. Run application
 
 using npm:
 
@@ -102,7 +116,8 @@ Find examples [here](https://github.com/oleksandrsydorenko/nodejs-graphql-mongod
 `lint:prettier` - runs Prettier code formatter\
 `serve` - runs application in production mode (requires `dist` folder with compiled sources)\
 `start` - runs application in development mode\
-`start:db` - runs MongoDB locally (needs MongoDB to be deployed locally)\
+`start:db` - runs Mongo and Mongo-Express docker images as containers (requires images to be pulled to local registry)\
+`stop:db` - stops and removes Mongo and Mongo-Express docker containers\
 `test:coverage` - runs Jest and generates code coverage report\
 `test:debug` - runs Jest in debug mode\
 `test:silent` - runs Jest in silent mode\
