@@ -67,9 +67,7 @@ using yarn:
 
 ### In production mode
 
-2. Deploy application.
-
-3. Build application
+2. Build application
 
 using npm:
 
@@ -78,6 +76,8 @@ using npm:
 using yarn:
 
 `yarn build`
+
+3. Deploy application.
 
 4. Run application
 
